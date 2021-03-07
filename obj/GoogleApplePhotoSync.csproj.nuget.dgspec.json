@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/Jen/Projects/GoogleApplePhotoSync/GoogleApplePhotoSync.csproj": {}
+    "/Users/Jen/Projects/GooglePhotoSync/GoogleApplePhotoSync.csproj": {}
   },
   "projects": {
-    "/Users/Jen/Projects/GoogleApplePhotoSync/GoogleApplePhotoSync.csproj": {
+    "/Users/Jen/Projects/GooglePhotoSync/GoogleApplePhotoSync.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/Jen/Projects/GoogleApplePhotoSync/GoogleApplePhotoSync.csproj",
+        "projectUniqueName": "/Users/Jen/Projects/GooglePhotoSync/GoogleApplePhotoSync.csproj",
         "projectName": "GoogleApplePhotoSync",
-        "projectPath": "/Users/Jen/Projects/GoogleApplePhotoSync/GoogleApplePhotoSync.csproj",
+        "projectPath": "/Users/Jen/Projects/GooglePhotoSync/GoogleApplePhotoSync.csproj",
         "packagesPath": "/Users/Jen/.nuget/packages/",
-        "outputPath": "/Users/Jen/Projects/GoogleApplePhotoSync/obj/",
+        "outputPath": "/Users/Jen/Projects/GooglePhotoSync/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"

@@ -37,14 +37,14 @@ namespace GoogleApplePhotoSync
             string ClientID = "920734361355-9jmsiu5k0cvt6kqhedvudaq9v6922ijv.apps.googleusercontent.com";
             string ClientSecret = "69CFh-cE-F8nrIj1f6zZmdwv";
 
-            using (var stream = new FileStream($@"/Users/Jen/Projects/GoogleApplePhotoSync/credentials.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream($@"/Users/Jen/Projects/GooglePhotoSync/credentials.json", FileMode.Open, FileAccess.Read))
             {
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     scopes,
                     UserName,
                     CancellationToken.None,
-                    new FileDataStore("/Users/Jen/Projects/GoogleApplePhotoSync/", true)).Result;
+                    new FileDataStore("/Users/Jen/Projects/GooglePhotoSync/", true)).Result;
             }
 
             client.DefaultRequestHeaders.Add("client_id", ClientID);

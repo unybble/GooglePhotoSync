@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lG2lTMVsjRgPvKCq3WAmQJ0th07Zpjx5by0Yejbd1LCUJ8q+AYTgzFtdoUFyXOWygRnStXDwx8rUro3k3bNCFw==",
+  "dgSpecHash": "g2wU97u4bN/p/ppPikoxnkjL0DYmT/ucX7DT60OglmNjWVVcFanDENQrdKG4NHaRcJKUlgQ4xSZcwSp8kJJY0A==",
   "success": true,
-  "projectFilePath": "/Users/Jen/Projects/GoogleApplePhotoSync/GoogleApplePhotoSync.csproj",
+  "projectFilePath": "/Users/Jen/Projects/GooglePhotoSync/GoogleApplePhotoSync.csproj",
   "expectedPackageFiles": [
     "/Users/Jen/.nuget/packages/google.apis/1.50.0/google.apis.1.50.0.nupkg.sha512",
     "/Users/Jen/.nuget/packages/google.apis.auth/1.50.0/google.apis.auth.1.50.0.nupkg.sha512",
