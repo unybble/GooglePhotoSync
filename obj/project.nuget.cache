@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "dgSpecHash": "lG2lTMVsjRgPvKCq3WAmQJ0th07Zpjx5by0Yejbd1LCUJ8q+AYTgzFtdoUFyXOWygRnStXDwx8rUro3k3bNCFw==",
+  "success": true,
+  "projectFilePath": "/Users/Jen/Projects/GoogleApplePhotoSync/GoogleApplePhotoSync.csproj",
+  "expectedPackageFiles": [
+    "/Users/Jen/.nuget/packages/google.apis/1.50.0/google.apis.1.50.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/google.apis.auth/1.50.0/google.apis.auth.1.50.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/google.apis.auth.aspnetcore3/1.50.0/google.apis.auth.aspnetcore3.1.50.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/google.apis.core/1.50.0/google.apis.core.1.50.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/3.0.0/microsoft.aspnetcore.authentication.openidconnect.3.0.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.aspnetcore.authorization/3.0.0/microsoft.aspnetcore.authorization.3.0.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.aspnetcore.metadata/3.0.0/microsoft.aspnetcore.metadata.3.0.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/3.0.0/microsoft.extensions.dependencyinjection.abstractions.3.0.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.extensions.logging.abstractions/3.0.0/microsoft.extensions.logging.abstractions.3.0.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.extensions.options/3.0.0/microsoft.extensions.options.3.0.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.extensions.primitives/3.0.0/microsoft.extensions.primitives.3.0.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.identitymodel.jsonwebtokens/5.5.0/microsoft.identitymodel.jsonwebtokens.5.5.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.identitymodel.logging/5.5.0/microsoft.identitymodel.logging.5.5.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.identitymodel.protocols/5.5.0/microsoft.identitymodel.protocols.5.5.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/5.5.0/microsoft.identitymodel.protocols.openidconnect.5.5.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/microsoft.identitymodel.tokens/5.5.0/microsoft.identitymodel.tokens.5.5.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/system.identitymodel.tokens.jwt/5.5.0/system.identitymodel.tokens.jwt.5.5.0.nupkg.sha512",
+    "/Users/Jen/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
