@@ -46,14 +46,15 @@ namespace GoogleApplePhotoSync
                         Directory.CreateDirectory(mediaPath + album.title);
                         var values = new Dictionary<string, string>
                         {
-                            { "pageSize", "10" },
+                            { "pageSize", "50" },
                             { "albumId", album.id.ToString() }
 
                         };
 
 
                         var ep = "https://photoslibrary.googleapis.com/v1/mediaItems:search";
-                        MakeMediaCall(ep, values, album);
+                        if(!album.title.Contains("Puzzolin"))
+                            MakeMediaCall(ep, values, album);
                     }
 
 
@@ -79,24 +80,30 @@ namespace GoogleApplePhotoSync
                         {
                             var clsResponseRootObject = JObject.Parse(content).ToObject<clsResponseRootObject>();
                            
-                            if (!values.ContainsKey("pageToken"))
-                                values.Add("pageToken", clsResponseRootObject.nextPageToken);
-                            else
-                                values["pageToken"] = clsResponseRootObject.nextPageToken;
+                            
 
                             foreach (var root in clsResponseRootObject.mediaItems)
                             {
                                 var path = mediaPath + "/" + album.title + "/" + root.filename;
-                                if (!File.Exists(mediaPath))
+                                if (!File.Exists(path))
                                 {
                                     if (root.mimeType.Contains("video"))
                                         wc.DownloadFile(root.baseUrl + "=dv", path);
                                     else
                                         wc.DownloadFile(root.baseUrl + "=d", path);
 
-                                    Console.WriteLine(string.Format("({2}) {0} | {1}", album.title, root.filename, c++));
+                                    Console.WriteLine(string.Format("({2}) {0} | {1}", album.title, root.filename, c));
                                 }
+                                c++;
                             }
+
+                            if (!values.ContainsKey("pageToken"))
+                                values.Add("pageToken", clsResponseRootObject.nextPageToken);
+                            else
+                                values["pageToken"] = clsResponseRootObject.nextPageToken;
+
+                            if (clsResponseRootObject.nextPageToken == null)
+                                values.Remove("pageToken");
                         }
                     }
                 }
