@@ -17,17 +17,96 @@ namespace GoogleApplePhotoSync
     class Program
     {
         private static readonly HttpClient client = new HttpClient();
+        private static string mediaPath = @"/Users/Jen/Pictures/";
 
+        private static void MakeAlbumCall(string endPoint)
+        {
+           
+
+
+            AlbumResponseRootObject albumResponseObject = new AlbumResponseRootObject();
+
+            string pageToken = null;
+            int c = 0;
+            while(pageToken!=null || c == 0) { 
+
+            var response = client.GetAsync(endPoint+ (pageToken != null ? "&pageToken=" + pageToken : "")+"&pageSize=2").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    if (content.Length != 0)
+                    {
+                        albumResponseObject = JObject.Parse(content).ToObject<AlbumResponseRootObject>();
+                        pageToken = albumResponseObject.nextPageToken;
+                    }
+
+                    foreach (var album in albumResponseObject.albums)
+                    {
+                        Directory.CreateDirectory(mediaPath + album.title);
+                        var values = new Dictionary<string, string>
+                        {
+                            { "pageSize", "10" },
+                            { "albumId", album.id.ToString() }
+
+                        };
+
+
+                        var ep = "https://photoslibrary.googleapis.com/v1/mediaItems:search";
+                        MakeMediaCall(ep, values, album);
+                    }
+
+
+                }
+
+            }
+        }
+        private static void MakeMediaCall(string endPoint, Dictionary<string,string> values, Album album)
+        {
+           
+            var c = 0;
+            while (values.ContainsKey("pageToken") || c==0)
+            {
+                var encodedContent = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
+                var response = client.PostAsync(endPoint, encodedContent).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    using (var wc = new WebClient())
+                    {
+                        //download to this directory
+                        var content = response.Content.ReadAsStringAsync().Result;
+                        if (content.Length != 0)
+                        {
+                            var clsResponseRootObject = JObject.Parse(content).ToObject<clsResponseRootObject>();
+                           
+                            if (!values.ContainsKey("pageToken"))
+                                values.Add("pageToken", clsResponseRootObject.nextPageToken);
+                            else
+                                values["pageToken"] = clsResponseRootObject.nextPageToken;
+
+                            foreach (var root in clsResponseRootObject.mediaItems)
+                            {
+                                var path = mediaPath + "/" + album.title + "/" + root.filename;
+                                if (!File.Exists(mediaPath))
+                                {
+                                    if (root.mimeType.Contains("video"))
+                                        wc.DownloadFile(root.baseUrl + "=dv", path);
+                                    else
+                                        wc.DownloadFile(root.baseUrl + "=d", path);
+
+                                    Console.WriteLine(string.Format("({2}) {0} | {1}", album.title, root.filename, c++));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         static void Main(string[] args)
         {
 
 
-            string mediaPath = @"/Users/Jen/Pictures/";
-
-
-            clsResponseRootObject responseObject = new clsResponseRootObject();
-            AlbumResponseRootObject albumResponseObject = new AlbumResponseRootObject();
-
+           
             UserCredential credential;
             string[] scopes = {
             "https://www.googleapis.com/auth/photoslibrary.sharing",
@@ -51,69 +130,13 @@ namespace GoogleApplePhotoSync
             client.DefaultRequestHeaders.Add("client_secret", ClientSecret);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(credential.Token.TokenType,credential.Token.AccessToken);
 
-            var response = client.GetAsync("https://photoslibrary.googleapis.com/v1/albums").Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var content = response.Content.ReadAsStringAsync().Result;
-                if (content.Length != 0)
-                {
-                    albumResponseObject = JObject.Parse(content).ToObject<AlbumResponseRootObject>();
-                }
+            var ep = "https://photoslibrary.googleapis.com/v1/albums?excludeNonAppCreatedData=false";
+            MakeAlbumCall(ep);
 
-                foreach (var item in albumResponseObject.albums)
-                {
-                    Directory.CreateDirectory(mediaPath + item.title);
-                    var values = new Dictionary<string, string>
-                        {
-                            { "pageSize", "100" },
-                            { "albumId", item.id.ToString() }
+            ep = "https://photoslibrary.googleapis.com/v1/sharedAlbums?excludeNonAppCreatedData=false";
 
-                        };
-                    var mediaPageToken = "1";
-                    var c = 0;
-                    while (mediaPageToken != null)
-                    {
-                        if (mediaPageToken != "1")
-                        {
-                            if (!values.ContainsKey("pageToken"))
-                                values.Add("pageToken", mediaPageToken);
-                            else
-                                values["pageToken"] = mediaPageToken;
-                        }
-                        var bcontent = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
+            MakeAlbumCall(ep);
 
-                        response = client.PostAsync("https://photoslibrary.googleapis.com/v1/mediaItems:search", bcontent).Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            using (var wc = new WebClient())
-                            {
-                                //download to this directory
-                                content = response.Content.ReadAsStringAsync().Result;
-                                if (content.Length != 0)
-                                {
-                                    var clsResponseRootObject = JObject.Parse(content).ToObject<clsResponseRootObject>();
-                                    mediaPageToken = clsResponseRootObject.nextPageToken;
-                                    foreach (var root in clsResponseRootObject.mediaItems)
-                                    {
-                                        var path = mediaPath + "/" + item.title + "/" + root.filename;
-                                        if (!File.Exists(mediaPath))
-                                        {
-                                            if (root.mimeType.Contains("video"))
-                                                wc.DownloadFile(root.baseUrl + "=dv", path);
-                                            else
-                                                wc.DownloadFile(root.baseUrl + "=d", path);
-
-                                            Console.WriteLine(string.Format("({2}) {0} | {1}",item.title, root.filename,c++));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
-
-            }
         }
     }
 }
