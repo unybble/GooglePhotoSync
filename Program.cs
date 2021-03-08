@@ -67,34 +67,49 @@ namespace GoogleApplePhotoSync
                         {
                             { "pageSize", "100" },
                             { "albumId", item.id.ToString() }
+
                         };
-                    var bcontent = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
-
-                    response = client.PostAsync("https://photoslibrary.googleapis.com/v1/mediaItems:search", bcontent).Result;
-                    if (response.IsSuccessStatusCode)
+                    var mediaPageToken = "1";
+                    var c = 0;
+                    while (mediaPageToken != null)
                     {
-                        using (var wc = new WebClient())
+                        if (mediaPageToken != "1")
                         {
-                            //download to this directory
-                            content = response.Content.ReadAsStringAsync().Result;
-                            if (content.Length != 0)
+                            if (!values.ContainsKey("pageToken"))
+                                values.Add("pageToken", mediaPageToken);
+                            else
+                                values["pageToken"] = mediaPageToken;
+                        }
+                        var bcontent = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
+
+                        response = client.PostAsync("https://photoslibrary.googleapis.com/v1/mediaItems:search", bcontent).Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            using (var wc = new WebClient())
                             {
-                                var clsResponseRootObject = JObject.Parse(content).ToObject<clsResponseRootObject>();
-                                foreach (var root in clsResponseRootObject.mediaItems)
+                                //download to this directory
+                                content = response.Content.ReadAsStringAsync().Result;
+                                if (content.Length != 0)
                                 {
-                                    var path = mediaPath + "/" + item.title + "/" + root.filename;
+                                    var clsResponseRootObject = JObject.Parse(content).ToObject<clsResponseRootObject>();
+                                    mediaPageToken = clsResponseRootObject.nextPageToken;
+                                    foreach (var root in clsResponseRootObject.mediaItems)
+                                    {
+                                        var path = mediaPath + "/" + item.title + "/" + root.filename;
+                                        if (!File.Exists(mediaPath))
+                                        {
+                                            if (root.mimeType.Contains("video"))
+                                                wc.DownloadFile(root.baseUrl + "=dv", path);
+                                            else
+                                                wc.DownloadFile(root.baseUrl + "=d", path);
 
-                                    if (root.mimeType.Contains("video"))
-                                        wc.DownloadFile(root.baseUrl + "=dv", path);
-                                    else
-                                        wc.DownloadFile(root.baseUrl + "=d", path);
-
-                                    Console.WriteLine(string.Format("Filename:{0}", root.filename));
+                                            Console.WriteLine(string.Format("({2}) {0} | {1}",item.title, root.filename,c++));
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-
 
                 }
 

@@ -42,7 +42,6 @@
 /Users/Jen/Projects/GooglePhotoSync/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
 /Users/Jen/Projects/GooglePhotoSync/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
 /Users/Jen/Projects/GooglePhotoSync/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
-/Users/Jen/Projects/GooglePhotoSync/obj/Debug/netcoreapp3.1/GoogleApplePhotoSync.csprojAssemblyReference.cache
 /Users/Jen/Projects/GooglePhotoSync/obj/Debug/netcoreapp3.1/GoogleApplePhotoSync.AssemblyInfoInputs.cache
 /Users/Jen/Projects/GooglePhotoSync/obj/Debug/netcoreapp3.1/GoogleApplePhotoSync.AssemblyInfo.cs
 /Users/Jen/Projects/GooglePhotoSync/obj/Debug/netcoreapp3.1/GoogleApplePhotoSync.csproj.CoreCompileInputs.cache
